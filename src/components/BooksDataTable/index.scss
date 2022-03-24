@@ -1,0 +1,25 @@
+.books-data-table {
+  padding: 15px 30px;
+  width: 75%;
+  height: 400px;
+
+  .book-table-title {
+    margin-bottom: 10px;
+  }
+
+  .book-search-engine {
+    padding-bottom: 15px;
+
+    .search-query,
+    .filter-options {
+      outline: none;
+      padding: 5px 10px;
+      width: 25%;
+      margin-right: 10px;
+    }
+
+    .filter-options {
+      width: 150px;
+    }
+  }
+}

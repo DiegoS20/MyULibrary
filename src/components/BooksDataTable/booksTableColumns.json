@@ -1,0 +1,6 @@
+[
+  { "field": "id", "headerName": "ID", "width": 70 },
+  { "field": "title", "headerName": "Book title", "width": 300 },
+  { "field": "author", "headerName": "Author", "width": 300 },
+  { "field": "genre", "headerName": "Genre", "width": 300 }
+]
