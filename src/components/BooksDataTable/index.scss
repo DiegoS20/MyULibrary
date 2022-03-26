@@ -9,17 +9,27 @@
 
   .book-search-engine {
     padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
 
-    .search-query,
-    .filter-options {
-      outline: none;
-      padding: 5px 10px;
-      width: 25%;
-      margin-right: 10px;
-    }
+    .book-filter {
+      width: 50%;
 
-    .filter-options {
-      width: 150px;
+      .search-query,
+      .filter-options {
+        outline: none;
+        padding: 5px 10px;
+        width: 25%;
+        margin-right: 10px;
+      }
+
+      .search-query {
+        width: 50%;
+      }
+
+      .filter-options {
+        width: 150px;
+      }
     }
   }
 
