@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Swal from "sweetalert2";
 import lendBook from "../../services/lendBook";
 
 import "./index.scss";
 
-export default function BookDetails({ bookInfo, idUser }) {
+export default function BookDetails({
+  bookInfo,
+  idUser,
+  bookStock,
+  onBookRequested,
+}) {
   const { id, title, author, genre } = bookInfo["row"];
-  const [stock, setStock] = useState(0);
-
-  useEffect(() => {
-    setStock(10);
-  }, []);
 
   function handleRequestCheckOutClick() {
     Swal.fire({
@@ -29,6 +28,12 @@ export default function BookDetails({ bookInfo, idUser }) {
           Swal.fire({
             icon: "success",
             title: "The book is yours!",
+          });
+          if (typeof onBookRequested == "function") onBookRequested();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: res.response,
           });
         }
       })
@@ -48,7 +53,7 @@ export default function BookDetails({ bookInfo, idUser }) {
         <strong>Title:</strong> {title} <br />
         <strong>Author:</strong> {author} <br />
         <strong>Genre:</strong> {genre} <br />
-        <strong>In stock:</strong> {stock} <br />
+        <strong>In stock:</strong> {bookStock} <br />
       </div>
       <div className="book-details-buttons">
         <Button
