@@ -4,11 +4,12 @@ import DataTable from "../DataTable";
 import "./index.scss";
 import booksColumns from "./booksTableColumns.json";
 
-export default function BooksDataTable({ title, data = [] }) {
+export default function BooksDataTable({ title, data = [], showDetails }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOption, setFilterOption] = useState("title");
   const [queryResult, setQueryResult] = useState([]);
 
+  //#region useEffects
   useEffect(() => {
     if (searchQuery === "") {
       setQueryResult(data);
@@ -19,6 +20,7 @@ export default function BooksDataTable({ title, data = [] }) {
     );
     setQueryResult(result);
   }, [data, searchQuery, filterOption]);
+  //#endregion
 
   return (
     <div className="books-data-table">
@@ -42,7 +44,16 @@ export default function BooksDataTable({ title, data = [] }) {
           <option value="genre">Book Genre</option>
         </select>
       </div>
-      <DataTable columns={booksColumns} rows={queryResult}></DataTable>
+      {showDetails && (
+        <div className="book-details-instructions">
+          Click on the row to see the book details
+        </div>
+      )}
+      <DataTable
+        columns={booksColumns}
+        rows={queryResult}
+        showDetails={showDetails}
+      ></DataTable>
     </div>
   );
 }
