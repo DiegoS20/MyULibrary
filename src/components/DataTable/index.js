@@ -4,10 +4,12 @@ import withReactContent from "sweetalert2-react-content";
 import BookDetails from "../BookDetails";
 import useUserInfo from "../../hooks/useUserInfo";
 import getBookStock from "../../services/getBookStock";
+import useRequestedBooks from "../../hooks/useRequestedBooks";
 
 const MySwal = withReactContent(Swal);
 export default function DataTable({ columns, rows = [], showDetails }) {
   const { user } = useUserInfo();
+  const { addBook } = useRequestedBooks();
 
   function handleRowClick(rowData) {
     getBookStock(rowData.row.id).then((res) => {
@@ -17,15 +19,13 @@ export default function DataTable({ columns, rows = [], showDetails }) {
             bookInfo={rowData}
             idUser={user["id"]}
             bookStock={res.stock}
-            onBookRequested={handleBookRequested}
+            onBookRequested={() => addBook(rowData.row)}
           />
         ),
         showConfirmButton: false,
       });
     });
   }
-
-  function handleBookRequested() {}
 
   return (
     <DataGrid
