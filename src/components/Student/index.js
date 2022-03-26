@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import BooksDataTable from "../BooksDataTable";
 import getBooks from "../../services/getBooks";
 import useUserInfo from "../../hooks/useUserInfo";
@@ -10,8 +11,10 @@ export default function Student() {
   const [booksAvailable, setBooksAvailable] = useState([]);
   const [booksRequested, setBooksRequested] = useState([]);
   const { user } = useUserInfo();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user || Object.keys(user).length === 0) return navigate("/login");
     getBooks().then((res) => {
       if (res.success) setBooksAvailable(res.books);
     });
