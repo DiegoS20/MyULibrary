@@ -1,24 +1,36 @@
+import { useState, useEffect } from "react";
 import BooksDataTable from "../BooksDataTable";
+import getBooks from "../../services/getBooks";
+import useUserInfo from "../../hooks/useUserInfo";
+import getBooksRequested from "../../services/getBooksRequested";
 
 import "./index.scss";
 
-const falseRows = [
-  { id: 1, title: "La Biblia", author: "Dios", genre: "Figuras literarias" },
-  {
-    id: 2,
-    title: "Don Quijote de la Mancha",
-    author: "Miguel de Cervantes",
-    genre: "Un loco",
-  },
-];
-
 export default function Student() {
+  const [booksAvailable, setBooksAvailable] = useState([]);
+  const [booksRequested, setBooksRequested] = useState([]);
+  const { user } = useUserInfo();
+
+  useEffect(() => {
+    getBooks().then((res) => {
+      if (res.success) setBooksAvailable(res.books);
+    });
+
+    getBooksRequested(user["id"]).then((res) => {
+      if (res.success) setBooksRequested(res.books);
+    });
+  }, [user]);
+
   return (
     <div className="student">
-      <h1 className="main-title">Hello back, {"{{Username}}"}</h1>
-      <BooksDataTable title="Books requested" data={falseRows} />
+      <h1 className="main-title">Hello back, {user["first_name"]}</h1>
+      <BooksDataTable title="Books requested" data={booksRequested} />
       <div style={{ height: "100px" }} className="blank_space"></div>
-      <BooksDataTable title="Books available" data={falseRows} showDetails />
+      <BooksDataTable
+        title="Books available"
+        data={booksAvailable}
+        showDetails
+      />
     </div>
   );
 }

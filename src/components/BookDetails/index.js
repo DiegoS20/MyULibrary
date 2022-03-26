@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Swal from "sweetalert2";
+import lendBook from "../../services/lendBook";
 
 import "./index.scss";
 
-export default function BookDetails({ bookInfo }) {
+export default function BookDetails({ bookInfo, idUser }) {
   const { id, title, author, genre } = bookInfo["row"];
   const [stock, setStock] = useState(0);
 
@@ -13,7 +14,31 @@ export default function BookDetails({ bookInfo }) {
   }, []);
 
   function handleRequestCheckOutClick() {
-    alert("API...");
+    Swal.fire({
+      title: "Requesting the check out...",
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    lendBook({
+      student_id: idUser,
+      book_id: id,
+    })
+      .then((res) => {
+        if (res.success) {
+          Swal.fire({
+            icon: "success",
+            title: "The book is yours!",
+          });
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong",
+          text: err,
+        });
+      });
   }
 
   return (
