@@ -5,17 +5,20 @@ import Student from "./components/Student";
 
 import { UserContextProvider } from "./contexts/UserContext";
 import { RequestedBooksContextProvider } from "./contexts/RequestedBooksContext";
+import { BooksContextProvider } from "./contexts/BooksContext";
 
 function App() {
   return (
     <main>
       <RequestedBooksContextProvider>
         <UserContextProvider>
-          <Routes>
-            <Route path="login" element={<Login />} />
-            <Route path="student" element={<Student />} />
-            <Route path="librarian" element={<Librarian />} />
-          </Routes>
+          <BooksContextProvider>
+            <Routes>
+              <Route path="login" element={<Login />} />
+              <Route path="student" element={<Student />} />
+              <Route path="librarian" element={<Librarian />} />
+            </Routes>
+          </BooksContextProvider>
         </UserContextProvider>
       </RequestedBooksContextProvider>
     </main>

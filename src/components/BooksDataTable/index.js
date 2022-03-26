@@ -3,10 +3,11 @@ import Button from "@mui/material/Button";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import DataTable from "../DataTable";
+import AddBookForm from "../AddBookForm";
+import useBooks from "../../hooks/useBooks";
 
 import "./index.scss";
 import booksColumns from "./booksTableColumns.json";
-import AddBookForm from "../AddBookForm";
 
 const mySwal = withReactContent(Swal);
 export default function BooksDataTable({
@@ -18,6 +19,7 @@ export default function BooksDataTable({
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOption, setFilterOption] = useState("title");
   const [queryResult, setQueryResult] = useState([]);
+  const { updateBooksList } = useBooks();
 
   //#region useEffects
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function BooksDataTable({
   //#region handlers
   function handleAddNewBookClick() {
     mySwal.fire({
-      html: <AddBookForm />,
+      html: <AddBookForm onBookAdded={() => updateBooksList()} />,
       showConfirmButton: false,
     });
   }

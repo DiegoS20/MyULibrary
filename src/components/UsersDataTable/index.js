@@ -17,6 +17,10 @@ export default function UsersDataTable() {
     getUsers().then((res) => {
       if (res.success) setUsers(res.users);
     });
+
+    return () => {
+      setUsers([]);
+    };
   }, []);
 
   //#region handlers

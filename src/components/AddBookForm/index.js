@@ -6,7 +6,7 @@ import addBook from "../../services/addBook";
 
 import "./index.scss";
 
-export default function AddBookForm() {
+export default function AddBookForm({ onBookAdded }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [genres, setGenres] = useState([]);
@@ -26,17 +26,19 @@ export default function AddBookForm() {
   function handleSubmit(e) {
     e.preventDefault();
     Swal.showLoading();
-    addBook({
+    const newBook = {
       title,
       author,
       genre: selectedGenre,
       stock,
-    }).then((res) => {
+    };
+    addBook(newBook).then((res) => {
       if (res.success) {
         Swal.fire({
           icon: "success",
           title: "Book added!",
         });
+        if (typeof onBookAdded === "function") onBookAdded();
       }
     });
   }
