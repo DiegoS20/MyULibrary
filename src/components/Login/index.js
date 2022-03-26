@@ -1,14 +1,32 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import login from "../../services/login";
+import useUserInfo from "../../hooks/useUserInfo";
 
 import "./index.scss";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useUserInfo();
+  let navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Logic to login the user goes here
+    Swal.showLoading();
+    const userInfo = {
+      email,
+      password,
+    };
+    return login(userInfo).then((res) => {
+      if (res.success) {
+        const user = res.user;
+        setUser(user);
+        navigate(`/${user.role}`);
+        Swal.close();
+      }
+    });
   }
 
   return (

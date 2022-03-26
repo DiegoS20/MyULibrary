@@ -3,14 +3,18 @@ import Librarian from "./components/Librarian";
 import Login from "./components/Login";
 import Student from "./components/Student";
 
+import { UserContextProvider } from "./contexts/UserContext";
+
 function App() {
   return (
     <main>
-      <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="student" element={<Student />} />
-        <Route path="librarian" element={<Librarian />} />
-      </Routes>
+      <UserContextProvider>
+        <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="student" element={<Student />} />
+          <Route path="librarian" element={<Librarian />} />
+        </Routes>
+      </UserContextProvider>
     </main>
   );
 }
