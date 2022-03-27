@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import Swal from "sweetalert2";
 import addUser from "../../services/addUser";
 
-export default function AddUserForm() {
+export default function AddUserForm({ onUserAdded }) {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +27,7 @@ export default function AddUserForm() {
             icon: "success",
             title: "User added!",
           });
+          if (typeof onUserAdded === "function") onUserAdded();
         }
       })
       .catch((err) => {

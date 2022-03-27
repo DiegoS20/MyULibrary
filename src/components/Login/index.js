@@ -14,7 +14,10 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    Swal.showLoading();
+    Swal.fire({
+      title: "Validating credentials...",
+      didOpen: () => Swal.showLoading(),
+    });
     const userInfo = {
       email,
       password,
@@ -25,6 +28,11 @@ export default function Login() {
         setUser(user);
         navigate(`/${user.role}`);
         Swal.close();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Credentials are incorrect",
+        });
       }
     });
   }

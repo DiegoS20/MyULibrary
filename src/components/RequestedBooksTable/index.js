@@ -12,10 +12,23 @@ export default function RequestedBooksTable() {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [selectedRow, setSelectedRow] = useState([]);
   const [books, setBooks] = useState([]);
+  const [resultBooks, setResultBooks] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     retrieveAllBookRequested();
   }, []);
+
+  useEffect(() => {
+    if (searchInput === "") {
+      setResultBooks(books);
+      return;
+    }
+    const filtered = books.filter(
+      (val) => val.student.indexOf(searchInput) > -1
+    );
+    setResultBooks(filtered);
+  }, [searchInput, books]);
 
   function handleReturnBookClick() {
     Swal.fire({
@@ -47,7 +60,10 @@ export default function RequestedBooksTable() {
 
   function retrieveAllBookRequested() {
     getAllBookRequested().then((res) => {
-      if (res.success) setBooks(res.books);
+      if (res.success) {
+        setBooks(res.books);
+        setResultBooks(res.books);
+      }
     });
   }
 
@@ -66,8 +82,16 @@ export default function RequestedBooksTable() {
           </Button>
         </div>
       </div>
+      <div className="requested-books-search">
+        <input
+          type="search"
+          placeholder="Write here the name you are looking for"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </div>
       <DataGrid
-        rows={books}
+        rows={resultBooks}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[]}

@@ -14,9 +14,7 @@ export default function UsersDataTable() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getUsers().then((res) => {
-      if (res.success) setUsers(res.users);
-    });
+    retrieveUsers();
 
     return () => {
       setUsers([]);
@@ -24,15 +22,19 @@ export default function UsersDataTable() {
   }, []);
 
   //#region handlers
-  function handleRowClick() {}
-
   function handleAddUserClick() {
     mySwal.fire({
-      html: <AddUserForm />,
+      html: <AddUserForm onUserAdded={() => retrieveUsers()} />,
       showConfirmButton: false,
     });
   }
   //#endregion
+
+  function retrieveUsers() {
+    getUsers().then((res) => {
+      if (res.success) setUsers(res.users);
+    });
+  }
 
   return (
     <div className="users-data-table">
@@ -53,7 +55,6 @@ export default function UsersDataTable() {
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[]}
-        onRowClick={handleRowClick}
       />
     </div>
   );
