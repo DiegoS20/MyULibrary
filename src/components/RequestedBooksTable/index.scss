@@ -1,0 +1,29 @@
+.requested-books-table {
+  width: 75%;
+  height: 400px;
+  padding: 15px 30px;
+
+  .requested-books-title-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .requested-books-title {
+      font-weight: bold;
+    }
+  }
+}
+
+.add-user-form {
+  input,
+  select {
+    outline: none;
+    padding: 5px 10px;
+    width: 25%;
+    margin-right: 10px;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}

@@ -1,0 +1,6 @@
+[
+  { "field": "id", "headerName": "ID", "width": 70 },
+  { "field": "student", "headerName": "Student name", "width": 300 },
+  { "field": "book", "headerName": "Book title", "width": 300 },
+  { "field": "date", "headerName": "Requested at", "width": 300 }
+]
